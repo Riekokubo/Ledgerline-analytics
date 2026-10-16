@@ -1,0 +1,90 @@
+// p-import-result：取り込み結果 ／ p-orders：注文一覧
+@use '../../foundation/tokens' as *;
+
+.p-import-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+
+  &__file {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-16);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
+  &__file-name {
+    @include text-style('body-strong');
+  }
+
+  &__file-meta {
+    color: var(--color-text-3);
+    @include text-style('caption-regular');
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-8) var(--space-16);
+    padding: 0 var(--space-4);
+    @include text-style('label-medium');
+
+    dt {
+      color: var(--color-text-2);
+    }
+
+    dd {
+      text-align: right;
+    }
+  }
+
+  &__strong {
+    font-weight: 600;
+  }
+
+  &__columns {
+    color: var(--color-text-2);
+    @include text-style('caption-regular');
+  }
+}
+
+.p-orders {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    align-self: flex-end;
+    color: var(--color-text-2);
+    @include text-style('label-medium');
+
+    input {
+      width: 160px;
+      min-height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--color-border-input);
+      border-radius: var(--radius-md);
+    }
+  }
+
+  &__pager {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    color: var(--color-text-3);
+    @include text-style('label-medium');
+  }
+}
+
+.c-table--wide {
+  min-width: 760px;
+}

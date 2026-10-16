@@ -1,0 +1,32 @@
+// c-alert：注意・エラーのお知らせ ／ c-data-source：表示中のデータ
+@use '../../foundation/tokens' as *;
+
+.c-alert {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-12) 14px;
+  border-radius: var(--radius-md);
+  @include text-style('label-medium');
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+
+  &--warning {
+    border: 1px solid #f0d2ae;
+    background: var(--color-affiliate-soft);
+    color: var(--color-affiliate-ink);
+  }
+}
+
+.c-data-source {
+  margin-top: calc(var(--space-12) * -1); // 見出しのすぐ下に寄せる
+  color: var(--color-text-3);
+  @include text-style('caption-regular');
+}

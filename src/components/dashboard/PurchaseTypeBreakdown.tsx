@@ -52,7 +52,7 @@ export function PurchaseTypeBreakdown({ rows }: { rows: Row[] }) {
       </div>
 
       <p className="p-purchase-types__note">
-        定期・継続の注文には紹介者情報が付かないため、アフィリエイト経由売上は通常購入と定期・初回のみで構成されます。
+        定期・継続の注文には紹介者情報がほとんど付かないため、アフィリエイト経由売上の大部分は通常購入と定期・初回から生まれています。
       </p>
     </div>
   )

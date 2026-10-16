@@ -30,7 +30,10 @@
 @use 'object/component/chart';
 @use 'object/component/table';
 @use 'object/component/period-filter';
+@use 'object/component/dropzone';
+@use 'object/component/alert';
 
 // Project
 @use 'object/project/page';
 @use 'object/project/purchase-types';
+@use 'object/project/import';

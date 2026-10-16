@@ -9,7 +9,9 @@ import { Card } from '../components/ui/Card'
 import { DemoBanner } from '../components/ui/DemoBanner'
 import { KpiCard } from '../components/ui/KpiCard'
 import { Legend } from '../components/ui/Legend'
-import { DEMO_ORDERS, TODAY } from '../demo/demoData'
+import { TODAY } from '../demo/demoData'
+import { DataSourceNote } from '../components/data/DataSourceNote'
+import { useData } from '../store/dataContext'
 import {
   affiliateRanking,
   breakdownByPurchaseType,
@@ -22,10 +24,15 @@ import { formatCount, formatPercent, formatYen } from '../lib/format/format'
 import { PURCHASE_TYPE_LABELS, type DateRange } from '../types/domain'
 
 export function DashboardPage() {
+  // 共有データ（サンプル or 取り込んだ CSV）
+  const { source, orders, shopifyImport } = useData()
+  const importedRange = shopifyImport?.stats.dateRange ?? null
+
   // useState：画面が覚えておく値。操作すると値が変わり、画面が描き直される
-  const [choice, setChoice] = useState<PeriodChoice>('last-month')
-  const [customRange, setCustomRange] = useState<DateRange>(() =>
-    rangeForPreset('last-month', TODAY),
+  // CSV を取り込んだ直後は、そのデータの期間を最初から表示する
+  const [choice, setChoice] = useState<PeriodChoice>(importedRange ? 'custom' : 'last-month')
+  const [customRange, setCustomRange] = useState<DateRange>(
+    () => importedRange ?? rangeForPreset('last-month', TODAY),
   )
 
   // 選んだ期間を具体的な日付にする（期間指定で開始日 > 終了日のときは集計しない）
@@ -34,16 +41,16 @@ export function DashboardPage() {
 
   // useMemo：期間が変わったときだけ集計し直す
   const result = useMemo(() => {
-    const orders = isValidRange ? filterByRange(DEMO_ORDERS, range) : []
+    const inRange = isValidRange ? filterByRange(orders, range) : []
     return {
-      summary: summarize(orders),
-      daily: isValidRange ? dailySales(orders, range) : [],
-      types: breakdownByPurchaseType(orders),
-      ranking: affiliateRanking(orders),
+      summary: summarize(inRange),
+      daily: isValidRange ? dailySales(inRange, range) : [],
+      types: breakdownByPurchaseType(inRange),
+      ranking: affiliateRanking(inRange),
     }
     // range はオブジェクトなので、中身の日付で変化を判定する
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [range.start, range.end, isValidRange])
+  }, [orders, range.start, range.end, isValidRange])
 
   const { summary } = result
   const hasData = summary.orderCount > 0
@@ -78,7 +85,7 @@ export function DashboardPage() {
 
   return (
     <div className="p-page">
-      <DemoBanner />
+      {source === 'demo' && <DemoBanner />}
 
       <PageHeader
         title="ダッシュボード"
@@ -92,6 +99,7 @@ export function DashboardPage() {
           />
         }
       />
+      <DataSourceNote />
 
       <section className="p-kpi-grid" aria-label="主要指標">
         {kpis.map((kpi) => (

@@ -1,6 +1,6 @@
+import { ShopifyImportCard } from '../components/import/ShopifyImportCard'
 import { PageHeader } from '../components/layout/PageHeader'
 import { Badge } from '../components/ui/Badge'
-import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 
 export function ImportPage() {
@@ -12,13 +12,7 @@ export function ImportPage() {
       />
 
       <div className="p-two-columns">
-        <Card
-          title="① Shopify 注文データ"
-          description="管理画面 › 注文管理 › エクスポート（CSV）"
-          aside={<Badge tone="neutral">未読み込み</Badge>}
-        >
-          <p className="p-placeholder">Step 5 でファイルの取り込みを作ります</p>
-        </Card>
+        <ShopifyImportCard />
 
         <Card
           title="② GoAffPro 照合用データ（任意）"
@@ -26,10 +20,6 @@ export function ImportPage() {
           aside={<Badge tone="neutral">未読み込み</Badge>}
         >
           <p className="p-placeholder">Step 6 で貼り付け取り込みを作ります</p>
-          <div className="p-actions">
-            <Button variant="secondary">クリア</Button>
-            <Button variant="primary">照合データとして取り込む</Button>
-          </div>
         </Card>
       </div>
     </div>
