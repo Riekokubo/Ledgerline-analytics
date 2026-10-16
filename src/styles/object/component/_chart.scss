@@ -1,0 +1,55 @@
+// c-chart / c-chart-tooltip / c-legend：グラフまわり
+@use '../../foundation/tokens' as *;
+
+.c-chart {
+  width: 100%;
+  min-width: 0;
+}
+
+.c-chart-tooltip {
+  padding: var(--space-8) var(--space-12);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: 0 4px 12px rgb(27 31 39 / 8%);
+  @include text-style('caption-regular');
+
+  &__date {
+    margin-bottom: var(--space-4);
+    @include text-style('caption-strong');
+  }
+}
+
+.c-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-2);
+  @include text-style('caption-regular');
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__swatch {
+    display: inline-block;
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+}
+
+// データがないときの表示
+.c-empty {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  color: var(--color-text-3);
+  @include text-style('label-medium');
+}

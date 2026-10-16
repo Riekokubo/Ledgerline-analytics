@@ -1,0 +1,92 @@
+// p-purchase-types：購入タイプ別の内訳
+@use '../../foundation/tokens' as *;
+
+.p-purchase-types {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  &__bar {
+    display: flex;
+    gap: 2px;
+    height: 28px;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+  }
+
+  &__segment {
+    display: flex;
+    flex-basis: 0;
+    align-items: center;
+    min-width: 0;
+    padding-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--color-surface);
+    @include text-style('caption-strong');
+
+    &--normal {
+      background: var(--color-type-normal);
+    }
+
+    &--subscription-first {
+      background: var(--color-type-sub-first);
+      color: var(--color-text);
+    }
+
+    &--subscription-recurring {
+      background: var(--color-type-sub-recurring);
+    }
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-16);
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--space-16);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    @include text-style('body-strong');
+  }
+
+  &__sales {
+    @include text-style('number-medium');
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px var(--space-12);
+    @include text-style('label-medium');
+
+    dt {
+      color: var(--color-text-2);
+    }
+
+    dd {
+      text-align: right;
+    }
+  }
+
+  &__affiliate {
+    color: var(--color-affiliate-strong);
+    font-weight: 600;
+  }
+
+  &__note {
+    color: var(--color-text-3);
+    @include text-style('caption-regular');
+  }
+}

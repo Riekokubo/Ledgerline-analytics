@@ -27,6 +27,10 @@
 @use 'object/component/kpi-card';
 @use 'object/component/segmented';
 @use 'object/component/demo-banner';
+@use 'object/component/chart';
+@use 'object/component/table';
+@use 'object/component/period-filter';
 
 // Project
 @use 'object/project/page';
+@use 'object/project/purchase-types';

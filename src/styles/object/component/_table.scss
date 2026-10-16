@@ -1,0 +1,75 @@
+// c-table：一覧表 ／ c-share-bar：構成比の横棒
+@use '../../foundation/tokens' as *;
+
+// 画面が狭いときは表だけ横スクロールさせる
+.c-table-wrap {
+  overflow-x: auto;
+}
+
+.c-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  @include text-style('body-regular');
+
+  th {
+    padding: 10px var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-3);
+    font-weight: 400;
+    text-align: left;
+    white-space: nowrap;
+    @include text-style('caption-regular');
+  }
+
+  td {
+    padding: var(--space-12) var(--space-8);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  &__rank {
+    width: 48px;
+    color: var(--color-text-2);
+    font-weight: 600;
+  }
+
+  &__num {
+    text-align: right !important;
+    white-space: nowrap;
+  }
+
+  &__strong {
+    font-weight: 600;
+  }
+
+  &__share {
+    width: 200px;
+  }
+}
+
+.c-share-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+
+  &__track {
+    flex: 1;
+    height: 6px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: var(--color-neutral-soft);
+  }
+
+  &__fill {
+    display: block;
+    height: 100%;
+    background: var(--color-affiliate);
+  }
+
+  &__value {
+    min-width: 44px;
+    color: var(--color-text-2);
+    text-align: right;
+    @include text-style('caption-regular');
+  }
+}

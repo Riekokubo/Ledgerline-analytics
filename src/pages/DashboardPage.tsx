@@ -1,30 +1,52 @@
 import { useMemo, useState } from 'react'
+import { AffiliateRankingTable } from '../components/dashboard/AffiliateRankingTable'
+import { PeriodFilter, type PeriodChoice } from '../components/dashboard/PeriodFilter'
+import { PurchaseTypeBreakdown } from '../components/dashboard/PurchaseTypeBreakdown'
+import { PURCHASE_TYPE_COLORS } from '../lib/style/purchaseTypeColors'
+import { SalesTrendChart } from '../components/dashboard/SalesTrendChart'
 import { PageHeader } from '../components/layout/PageHeader'
 import { Card } from '../components/ui/Card'
 import { DemoBanner } from '../components/ui/DemoBanner'
 import { KpiCard } from '../components/ui/KpiCard'
-import { SegmentedControl } from '../components/ui/SegmentedControl'
+import { Legend } from '../components/ui/Legend'
 import { DEMO_ORDERS, TODAY } from '../demo/demoData'
-import { filterByRange, summarize } from '../lib/aggregate/aggregate'
-import { formatDate, rangeForPreset, type PeriodPreset } from '../lib/date/date'
+import {
+  affiliateRanking,
+  breakdownByPurchaseType,
+  dailySales,
+  filterByRange,
+  summarize,
+} from '../lib/aggregate/aggregate'
+import { formatDate, rangeForPreset } from '../lib/date/date'
 import { formatCount, formatPercent, formatYen } from '../lib/format/format'
-
-const PERIOD_OPTIONS: { value: PeriodPreset; label: string }[] = [
-  { value: 'this-month', label: '今月' },
-  { value: 'last-month', label: '先月' },
-  { value: 'last-3-months', label: '過去3ヶ月' },
-  // 「期間指定」は Step 4 で日付入力と一緒に追加する
-]
+import { PURCHASE_TYPE_LABELS, type DateRange } from '../types/domain'
 
 export function DashboardPage() {
-  // useState：画面が覚えておく値。ボタンを押すと period が変わり、画面が描き直される
-  const [period, setPeriod] = useState<PeriodPreset>('last-month')
+  // useState：画面が覚えておく値。操作すると値が変わり、画面が描き直される
+  const [choice, setChoice] = useState<PeriodChoice>('last-month')
+  const [customRange, setCustomRange] = useState<DateRange>(() =>
+    rangeForPreset('last-month', TODAY),
+  )
 
-  // 選んだ期間を具体的な日付にする
-  const range = useMemo(() => rangeForPreset(period, TODAY), [period])
+  // 選んだ期間を具体的な日付にする（期間指定で開始日 > 終了日のときは集計しない）
+  const range: DateRange = choice === 'custom' ? customRange : rangeForPreset(choice, TODAY)
+  const isValidRange = range.start <= range.end
 
-  // useMemo：期間が変わったときだけ集計し直す（毎回の再描画で無駄に計算しない）
-  const summary = useMemo(() => summarize(filterByRange(DEMO_ORDERS, range)), [range])
+  // useMemo：期間が変わったときだけ集計し直す
+  const result = useMemo(() => {
+    const orders = isValidRange ? filterByRange(DEMO_ORDERS, range) : []
+    return {
+      summary: summarize(orders),
+      daily: isValidRange ? dailySales(orders, range) : [],
+      types: breakdownByPurchaseType(orders),
+      ranking: affiliateRanking(orders),
+    }
+    // range はオブジェクトなので、中身の日付で変化を判定する
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [range.start, range.end, isValidRange])
+
+  const { summary } = result
+  const hasData = summary.orderCount > 0
 
   const kpis = [
     {
@@ -62,11 +84,11 @@ export function DashboardPage() {
         title="ダッシュボード"
         description={`集計期間 ${formatDate(range.start)} – ${formatDate(range.end)} ・ 日本時間 ・ 注文日基準`}
         actions={
-          <SegmentedControl
-            label="期間"
-            options={PERIOD_OPTIONS}
-            value={period}
-            onChange={setPeriod}
+          <PeriodFilter
+            choice={choice}
+            onChoiceChange={setChoice}
+            customRange={customRange}
+            onCustomRangeChange={setCustomRange}
           />
         }
       />
@@ -78,22 +100,54 @@ export function DashboardPage() {
             label={kpi.label}
             value={kpi.value}
             note={kpi.note}
-            state={summary.orderCount === 0 ? 'empty' : 'default'}
+            state={hasData ? 'default' : 'empty'}
           />
         ))}
       </section>
 
-      <Card title="売上推移（日別）">
-        <p className="p-placeholder">Step 4 でグラフを表示します</p>
+      <Card
+        title="売上推移（日別）"
+        aside={
+          <Legend
+            items={[
+              { label: '全体売上（紹介売上を含む）', color: '--color-series-total' },
+              { label: 'うちアフィリエイト経由', color: '--color-affiliate' },
+            ]}
+          />
+        }
+      >
+        {hasData ? (
+          <SalesTrendChart data={result.daily} />
+        ) : (
+          <p className="c-empty">この期間の注文はありません</p>
+        )}
       </Card>
 
-      <Card title="購入タイプ別の内訳" description="通常購入と定期購入（初回・継続）に分けた売上">
-        <p className="p-placeholder">Step 4 で内訳を表示します</p>
+      <Card
+        title="購入タイプ別の内訳"
+        description="通常購入と定期購入（初回・継続）に分けた売上"
+        aside={
+          <Legend
+            items={result.types.map((t) => ({
+              label: PURCHASE_TYPE_LABELS[t.type],
+              color: PURCHASE_TYPE_COLORS[t.type],
+            }))}
+          />
+        }
+      >
+        {hasData ? (
+          <PurchaseTypeBreakdown rows={result.types} />
+        ) : (
+          <p className="c-empty">この期間の注文はありません</p>
+        )}
       </Card>
 
       <div className="p-dashboard-bottom">
-        <Card title="アフィリエイター別 売上ランキング">
-          <p className="p-placeholder">Step 4 でランキングを表示します</p>
+        <Card
+          title="アフィリエイター別 売上ランキング"
+          aside={<small className="c-card__meta">Shopify 注文の紹介者情報から集計</small>}
+        >
+          <AffiliateRankingTable rows={result.ranking} />
         </Card>
         <Card title="GoAffPro との照合">
           <p className="p-placeholder">Step 6 で照合結果を表示します</p>

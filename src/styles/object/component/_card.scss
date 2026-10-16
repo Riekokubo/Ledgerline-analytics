@@ -23,6 +23,11 @@
     @include text-style('heading-card');
   }
 
+  &__meta {
+    color: var(--color-text-3);
+    @include text-style('caption-regular');
+  }
+
   &__description {
     margin-top: 2px;
     color: var(--color-text-3);
