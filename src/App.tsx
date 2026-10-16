@@ -1,14 +1,21 @@
-import { formatYen } from './lib/format/formatYen'
+import { BrowserRouter, Route, Routes } from 'react-router'
+import { AppShell } from './components/layout/AppShell'
+import { DashboardPage } from './pages/DashboardPage'
+import { DataReviewPage } from './pages/DataReviewPage'
+import { ImportPage } from './pages/ImportPage'
 
-// Step 0 の動作確認用の画面。Step 1 でダッシュボードの骨組みに置き換える。
+// URL と画面の対応表。AppShell（サイドバー付きの枠）の中に各ページを表示する
 function App() {
   return (
-    <main style={{ padding: 'var(--space-32)' }}>
-      <h1>Ledgerline Analytics</h1>
-      <p style={{ color: 'var(--color-text-3)', marginTop: 'var(--space-8)' }}>
-        環境構築ができました。デザイントークンと金額の表示：{formatYen(3584000)}
-      </p>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppShell />}>
+          <Route index element={<DashboardPage />} />
+          <Route path="import" element={<ImportPage />} />
+          <Route path="data" element={<DataReviewPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

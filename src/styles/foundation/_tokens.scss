@@ -58,15 +58,51 @@
 // Text Styles を SCSS の mixin として使えるようにする
 // 例）@include text-style('heading-card');
 $text-styles: (
-  'number-large': (28px, 700, 36px),
-  'number-medium': (22px, 700, 30px),
-  'heading-page': (24px, 700, 32px),
-  'heading-card': (16px, 600, 24px),
-  'body-regular': (14px, 400, 22px),
-  'body-strong': (14px, 600, 22px),
-  'label-medium': (13px, 500, 20px),
-  'caption-regular': (12px, 400, 18px),
-  'caption-strong': (12px, 600, 18px),
+  'number-large': (
+    28px,
+    700,
+    36px,
+  ),
+  'number-medium': (
+    22px,
+    700,
+    30px,
+  ),
+  'heading-page': (
+    24px,
+    700,
+    32px,
+  ),
+  'heading-card': (
+    16px,
+    600,
+    24px,
+  ),
+  'body-regular': (
+    14px,
+    400,
+    22px,
+  ),
+  'body-strong': (
+    14px,
+    600,
+    22px,
+  ),
+  'label-medium': (
+    13px,
+    500,
+    20px,
+  ),
+  'caption-regular': (
+    12px,
+    400,
+    18px,
+  ),
+  'caption-strong': (
+    12px,
+    600,
+    18px,
+  ),
 );
 
 @mixin text-style($name) {

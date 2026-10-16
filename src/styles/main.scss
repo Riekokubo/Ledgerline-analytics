@@ -1,18 +1,32 @@
 // =====================================================================
 // スタイルの入口（FLOCSS の順番で読み込む）
 //
-//   foundation/          … トークン・リセット・body などの基本
-//   layout/      (l-)    … サイドバー・メイン領域など画面の骨組み
+//   foundation/            … トークン・リセット・body などの基本
+//   layout/        (l-)    … サイドバー・メイン領域など画面の骨組み
 //   object/component (c-) … ボタン・バッジ・KPIカードなど小さな部品
-//   object/project   (p-) … ダッシュボードのランキング表など画面固有のまとまり
+//   object/project   (p-) … ページ内の並べ方など画面固有のまとまり
 //   object/utility   (u-) … 余白調整などの補助クラス
 //
 // クラス名は BEM：.c-kpi-card / .c-kpi-card__value / .c-kpi-card--empty
 // React のコンポーネント1つ ＝ BEM のブロック1つ を基本にする。
 // =====================================================================
 
+// Foundation
 @use 'foundation/base';
 
-// Step 1 以降で、作ったファイルをここに追加していく
-// @use 'layout/app-shell';
-// @use 'object/component/button';
+// Layout
+@use 'layout/app-shell';
+@use 'layout/sidebar';
+@use 'layout/page-header';
+
+// Component
+@use 'object/component/nav-item';
+@use 'object/component/button';
+@use 'object/component/badge';
+@use 'object/component/card';
+@use 'object/component/kpi-card';
+@use 'object/component/segmented';
+@use 'object/component/demo-banner';
+
+// Project
+@use 'object/project/page';

@@ -1,0 +1,18 @@
+// c-demo-banner：サンプルデータ表示中の帯
+@use '../../foundation/tokens' as *;
+
+.c-demo-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-md);
+  background: var(--color-affiliate-soft);
+
+  &__text {
+    flex: 1 1 280px;
+    color: var(--color-affiliate-ink);
+    @include text-style('label-medium');
+  }
+}

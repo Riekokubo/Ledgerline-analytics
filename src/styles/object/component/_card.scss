@@ -1,0 +1,31 @@
+// c-card：白い面の枠
+@use '../../foundation/tokens' as *;
+
+.c-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  padding: var(--space-20) var(--space-24);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12);
+  }
+
+  &__title {
+    @include text-style('heading-card');
+  }
+
+  &__description {
+    margin-top: 2px;
+    color: var(--color-text-3);
+    @include text-style('caption-regular');
+  }
+}

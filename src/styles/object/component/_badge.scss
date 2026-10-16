@@ -1,0 +1,31 @@
+// c-badge：状態を示す小さなラベル（Figma: Badge / Tone）
+@use '../../foundation/tokens' as *;
+
+.c-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  @include text-style('caption-strong');
+
+  &--success {
+    background: var(--color-success-soft);
+    color: var(--color-success);
+  }
+
+  &--warning {
+    background: var(--color-affiliate-soft);
+    color: var(--color-affiliate-ink);
+  }
+
+  &--error {
+    background: var(--color-error-soft);
+    color: var(--color-error-ink);
+  }
+
+  &--neutral {
+    background: var(--color-neutral-soft);
+    color: var(--color-text-2);
+  }
+}

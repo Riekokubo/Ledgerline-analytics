@@ -1,0 +1,55 @@
+// c-button：ボタン（Figma: Button / Type=Primary・Secondary・Danger）
+@use '../../foundation/tokens' as *;
+
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-20);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  @include text-style('body-strong');
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background: var(--color-accent);
+    color: var(--color-surface);
+
+    &:hover {
+      background: var(--color-accent-strong);
+    }
+  }
+
+  &--secondary {
+    background: var(--color-surface);
+    border-color: var(--color-border-input);
+    color: var(--color-text);
+
+    &:hover {
+      background: var(--color-bg);
+    }
+  }
+
+  &--danger {
+    background: var(--color-surface);
+    border-color: var(--color-border-input);
+    color: var(--color-error);
+
+    &:hover {
+      background: var(--color-error-soft);
+    }
+  }
+}

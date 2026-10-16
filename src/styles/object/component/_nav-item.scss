@@ -1,0 +1,25 @@
+// c-nav-item：サイドバーのメニュー項目（Figma: NavItem）
+@use '../../foundation/tokens' as *;
+
+.c-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: 44px;
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-md);
+  color: var(--color-text-2);
+  text-decoration: none;
+  @include text-style('body-regular');
+
+  &:hover {
+    background: var(--color-bg);
+  }
+
+  // React Router の NavLink が今いるページに .active を付ける（State=Active）
+  &.active {
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+    font-weight: 600;
+  }
+}

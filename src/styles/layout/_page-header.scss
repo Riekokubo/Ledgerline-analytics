@@ -1,0 +1,20 @@
+// l-page-header：各ページの見出し
+@use '../foundation/tokens' as *;
+
+.l-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-16);
+
+  &__title {
+    @include text-style('heading-page');
+  }
+
+  &__description {
+    margin-top: var(--space-4);
+    color: var(--color-text-3);
+    @include text-style('label-medium');
+  }
+}

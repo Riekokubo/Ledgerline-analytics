@@ -1,0 +1,79 @@
+// l-sidebar：左のメニュー
+@use '../foundation/tokens' as *;
+
+.l-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 0 0 232px;
+  padding: var(--space-24) var(--space-16);
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    padding: 0 var(--space-8);
+  }
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--color-text);
+    color: var(--color-surface);
+    @include text-style('body-strong');
+  }
+
+  &__wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+
+    strong {
+      @include text-style('body-strong');
+    }
+
+    small {
+      @include text-style('caption-regular');
+      color: var(--color-text-3);
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__note {
+    margin-top: auto;
+    padding: var(--space-12);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text-2);
+    @include text-style('caption-regular');
+  }
+
+  @media (max-width: 900px) {
+    flex-basis: auto;
+    gap: var(--space-16);
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+
+    &__nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    &__note {
+      display: none;
+    }
+  }
+}

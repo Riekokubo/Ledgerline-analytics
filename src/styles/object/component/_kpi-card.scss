@@ -1,0 +1,42 @@
+// c-kpi-card：主要指標のカード（Figma: KpiCard / State）
+@use '../../foundation/tokens' as *;
+
+.c-kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-20);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+
+  &__label {
+    color: var(--color-text-2);
+    @include text-style('label-medium');
+  }
+
+  &__value {
+    @include text-style('number-large');
+  }
+
+  &__note {
+    color: var(--color-text-3);
+    @include text-style('caption-regular');
+  }
+
+  &__skeleton {
+    width: 60%;
+    height: 28px;
+    margin: var(--space-4) 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-border-subtle);
+  }
+
+  &--empty {
+    background: var(--color-surface-muted);
+
+    .c-kpi-card__value {
+      color: var(--color-text-3);
+    }
+  }
+}
