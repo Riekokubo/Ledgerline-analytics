@@ -1,0 +1,77 @@
+@use 'sass:map';
+@use 'sass:list';
+
+// =====================================================================
+// デザイントークン
+// Figma の Variables（Design Tokens コレクション）と同じ名前・同じ値。
+// Figma で値を変えたら、ここも同じように変える。
+// =====================================================================
+
+:root {
+  // ---- color/*
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #fafbfc;
+  --color-border: #e3e6eb;
+  --color-border-subtle: #eef0f3;
+  --color-border-input: #c9ced6;
+  --color-text: #1b1f27;
+  --color-text-2: #4a5260;
+  --color-text-3: #6b7380;
+  --color-accent: #2f5bd3;
+  --color-accent-strong: #1f45a8;
+  --color-accent-soft: #e8eefb;
+  --color-series-total: #b9c8f0;
+  --color-affiliate: #d9822b;
+  --color-affiliate-soft: #fbeedf;
+  --color-affiliate-ink: #6b3a08;
+  --color-type-normal: #2f5bd3;
+  --color-type-sub-first: #8fa6e6;
+  --color-type-sub-recurring: #1e3a8a;
+  --color-success: #1e7a4c;
+  --color-success-soft: #e6f4ec;
+  --color-warning: #9a6200;
+  --color-error: #b42318;
+  --color-error-soft: #fdecea;
+  --color-error-ink: #8a1c12;
+  --color-neutral-soft: #f2f3f5;
+
+  // ---- space/*
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  // ---- radius/*
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  // ---- 文字（Figma の Text Styles に対応）
+  --font-family: 'IBM Plex Sans JP', 'Hiragino Sans', sans-serif;
+}
+
+// Text Styles を SCSS の mixin として使えるようにする
+// 例）@include text-style('heading-card');
+$text-styles: (
+  'number-large': (28px, 700, 36px),
+  'number-medium': (22px, 700, 30px),
+  'heading-page': (24px, 700, 32px),
+  'heading-card': (16px, 600, 24px),
+  'body-regular': (14px, 400, 22px),
+  'body-strong': (14px, 600, 22px),
+  'label-medium': (13px, 500, 20px),
+  'caption-regular': (12px, 400, 18px),
+  'caption-strong': (12px, 600, 18px),
+);
+
+@mixin text-style($name) {
+  $style: map.get($text-styles, $name);
+  font-size: list.nth($style, 1);
+  font-weight: list.nth($style, 2);
+  line-height: list.nth($style, 3);
+}

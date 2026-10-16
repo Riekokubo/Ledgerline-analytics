@@ -1,0 +1,41 @@
+// =====================================================================
+// Foundation：ページ全体の初期設定（リセットと基本スタイル）
+// =====================================================================
+@use 'tokens' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  @include text-style('body-regular');
+  font-variant-numeric: tabular-nums; // 数字の幅をそろえて桁を読みやすくする
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--color-accent-strong);
+}
