@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router'
+import { APP_NAME } from '../../config/app'
 
 // メニュー項目の定義。項目を増やすときはここに1行足す
 const NAV_ITEMS = [
@@ -52,11 +53,11 @@ export function Sidebar() {
     <nav className="l-sidebar" aria-label="メインメニュー">
       <div className="l-sidebar__logo">
         <span className="l-sidebar__mark" aria-hidden="true">
-          S
+          {APP_NAME.brand.charAt(0)}
         </span>
         <span className="l-sidebar__wordmark">
-          <strong>Ledgerline</strong>
-          <small>Analytics</small>
+          <strong>{APP_NAME.brand}</strong>
+          <small>{APP_NAME.product}</small>
         </span>
       </div>
 
