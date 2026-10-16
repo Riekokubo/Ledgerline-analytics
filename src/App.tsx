@@ -10,7 +10,8 @@ import { DataProvider } from './store/DataProvider'
 function App() {
   return (
     <DataProvider>
-      <BrowserRouter>
+      {/* basename：公開先のパス（GitHub Pages ではリポジトリ名）に合わせる */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route element={<AppShell />}>
             <Route index element={<DashboardPage />} />
