@@ -53,3 +53,14 @@
   color: var(--color-text-3);
   @include text-style('label-medium');
 }
+
+.c-empty--compact {
+  min-height: 0;
+  padding: var(--space-16) 0;
+  text-align: center;
+  line-height: 1.8;
+
+  a {
+    display: block;
+  }
+}

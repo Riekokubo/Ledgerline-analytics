@@ -1,7 +1,6 @@
+import { GoAffProImportCard } from '../components/goaffpro/GoAffProImportCard'
 import { ShopifyImportCard } from '../components/import/ShopifyImportCard'
 import { PageHeader } from '../components/layout/PageHeader'
-import { Badge } from '../components/ui/Badge'
-import { Card } from '../components/ui/Card'
 
 export function ImportPage() {
   return (
@@ -13,14 +12,7 @@ export function ImportPage() {
 
       <div className="p-two-columns">
         <ShopifyImportCard />
-
-        <Card
-          title="② GoAffPro 照合用データ（任意）"
-          description="集計には使わず、Shopify 側の紹介売上との答え合わせだけに使います"
-          aside={<Badge tone="neutral">未読み込み</Badge>}
-        >
-          <p className="p-placeholder">Step 6 で貼り付け取り込みを作ります</p>
-        </Card>
+        <GoAffProImportCard />
       </div>
     </div>
   )

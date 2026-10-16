@@ -30,3 +30,37 @@
   color: var(--color-text-3);
   @include text-style('caption-regular');
 }
+
+.c-alert--error {
+  border: 1px solid #f5c2bc;
+  background: var(--color-error-soft);
+  color: var(--color-error-ink);
+}
+
+// ラベル付きの入力欄（年・日付・貼り付け欄）
+.c-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--color-text);
+  @include text-style('label-medium');
+
+  input,
+  textarea {
+    padding: var(--space-8) 10px;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    @include text-style('body-regular');
+  }
+
+  input {
+    min-height: 36px;
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: ui-monospace, 'SF Mono', monospace;
+    @include text-style('caption-regular');
+  }
+}

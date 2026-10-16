@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react'
 import type { Encoding } from '../lib/csv/decode'
 import type { ImportIssue, ShopifyImportStats } from '../lib/csv/shopifyOrders'
-import type { Order } from '../types/domain'
+import type { LeaderboardRow, MonthlyRow } from '../lib/goaffpro/parsePaste'
+import type { DateRange, Order } from '../types/domain'
 
 // =====================================================================
 // アプリ全体で共有するデータ（Context）
@@ -18,12 +19,24 @@ export type ShopifyImport = {
   importedAt: Date
 }
 
+/** GoAffPro の照合用データ（Annual Report と Leaderboard は別々に貼り付ける） */
+export type GoAffProData = {
+  monthly: { year: number; rows: MonthlyRow[]; importedAt: Date } | null
+  leaderboard: { range: DateRange; rows: LeaderboardRow[]; importedAt: Date } | null
+}
+
 export type DataContextValue = {
   /** 'demo'：架空のサンプル ／ 'shopify'：取り込んだ CSV */
   source: 'demo' | 'shopify'
   orders: Order[]
+  /** 注文データがカバーしている期間（照合で「まるごと含む月」を判定するのに使う） */
+  coverage: DateRange | null
   shopifyImport: ShopifyImport | null
+  goaffpro: GoAffProData
   setShopifyData: (orders: Order[], info: ShopifyImport) => void
+  setGoAffProMonthly: (year: number, rows: MonthlyRow[]) => void
+  setGoAffProLeaderboard: (range: DateRange, rows: LeaderboardRow[]) => void
+  clearGoAffPro: () => void
   clearData: () => void
 }
 

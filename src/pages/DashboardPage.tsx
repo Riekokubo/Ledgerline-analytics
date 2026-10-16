@@ -11,6 +11,7 @@ import { KpiCard } from '../components/ui/KpiCard'
 import { Legend } from '../components/ui/Legend'
 import { TODAY } from '../demo/demoData'
 import { DataSourceNote } from '../components/data/DataSourceNote'
+import { GoAffProMatchCard } from '../components/goaffpro/GoAffProMatchCard'
 import { useData } from '../store/dataContext'
 import {
   affiliateRanking,
@@ -157,9 +158,7 @@ export function DashboardPage() {
         >
           <AffiliateRankingTable rows={result.ranking} />
         </Card>
-        <Card title="GoAffPro との照合">
-          <p className="p-placeholder">Step 6 で照合結果を表示します</p>
-        </Card>
+        <GoAffProMatchCard range={range} />
       </div>
     </div>
   )
