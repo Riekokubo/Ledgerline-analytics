@@ -31,6 +31,18 @@
   @include text-style('caption-regular');
 }
 
+.c-alert--success {
+  border: 1px solid #b9dfc8;
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.c-alert--info {
+  border: 1px solid #c9d6f4;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+}
+
 .c-alert--error {
   border: 1px solid #f5c2bc;
   background: var(--color-error-soft);

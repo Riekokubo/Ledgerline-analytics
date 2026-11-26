@@ -68,6 +68,8 @@ npm run dev      # 開発用サーバーを起動 → http://localhost:5173
 | `npm run build` | 型チェックをして本番用に書き出す |
 | `npm run lint` | コードの書き方の問題を検出 |
 | `npm run format` | コードの整形 |
+| `npm run build:gas` | Google Apps Script 版を `gas/index.html` に書き出す |
+| `npm run push:gas` | GAS 版を書き出して、Apps Script に送る（clasp） |
 
 ## ディレクトリ構成
 
@@ -93,3 +95,14 @@ tests/fixtures/    テスト用の架空CSV
 - 実際の顧客情報や売上データは、Git にも公開環境にも入れない
 - `.gitignore` で CSV と `local-data/` を除外（`tests/fixtures/` の架空データのみ例外）
 - 公開デモでも、CSV を読み込んだ場合の処理はブラウザ内だけで完結する
+
+## 実運用（Google Apps Script 版）
+
+お客様の実データは、公開デモとは別に Google Apps Script のウェブアプリで使う。
+画面・集計ロジック・テストは公開デモと共通で、次の点だけが違う。
+
+- 共通の暗証番号でログインする（確認は GAS 側で行い、5回の間違いで15分ロック）
+- 集計用の7項目だけを Google スプレッドシートに保存し、月ごとに積み上げる（氏名・住所・メールは保存しない）
+- 同じ注文番号は新しい内容で上書きする
+
+セットアップと毎月の使い方は [docs/gas-setup.md](docs/gas-setup.md) を参照。

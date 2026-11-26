@@ -14,7 +14,8 @@ import { compareAffiliates, compareMonthly, summarizeMonthly } from '../lib/reco
 import { useData } from '../store/dataContext'
 
 export function DataReviewPage() {
-  const { source, orders, coverage, shopifyImport, goaffpro, clearData } = useData()
+  const { source, orders, coverage, shopifyImport, stored, storage, goaffpro, clearData } =
+    useData()
   const stats = shopifyImport?.stats
 
   // GoAffPro との照合（貼り付けたデータがあるときだけ）
@@ -39,15 +40,25 @@ export function DataReviewPage() {
         title="読み込み済みデータ"
         description="集計に使っているデータの中身と、Shopify と GoAffPro の照合結果を確認できます。"
         actions={
-          <Button variant="danger" onClick={handleClear} disabled={source === 'demo'}>
-            読み込んだデータを消去
-          </Button>
+          // GAS 版では消去ボタンを出さない（保存したデータはスプレッドシートで管理する）
+          storage ? undefined : (
+            <Button variant="danger" onClick={handleClear} disabled={source === 'demo'}>
+              読み込んだデータを消去
+            </Button>
+          )
         }
       />
       <DataSourceNote />
 
       <section className="p-kpi-grid" aria-label="読み込み状況">
-        {stats ? (
+        {/* GAS 版で保存済みのデータがあるときは、シートにある全件を表示する */}
+        {stored && coverage ? (
+          <KpiCard
+            label="Shopify 注文（保存済み）"
+            value={formatCount(stored.orderCount)}
+            note={`${formatDate(coverage.start)} – ${formatDate(coverage.end)}`}
+          />
+        ) : stats ? (
           <KpiCard
             label="Shopify 注文"
             value={formatCount(stats.orderCount)}

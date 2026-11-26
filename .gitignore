@@ -29,3 +29,10 @@ dist-ssr
 !tests/fixtures/**/*.csv
 # 実データの置き場所（使う場合はここに置く）
 local-data/
+
+# ===== Google Apps Script 版 =====
+# ビルドしてできるファイル（npm run build:gas で作り直せる）
+dist-gas
+gas/index.html
+# スクリプトIDはお客様ごとに違うので Git に入れない
+gas/.clasp.json
