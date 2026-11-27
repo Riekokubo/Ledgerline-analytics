@@ -1,4 +1,9 @@
 import { useId, useState, type DragEvent } from 'react'
+import { IS_GAS } from '../../config/app'
+
+const HINT = IS_GAS
+  ? '個人情報を除いた集計用の項目だけを保存します'
+  : 'ファイルはこのブラウザ内だけで処理されます'
 
 // Figma の Dropzone（State=Idle / DragOver / Error）に対応。読み込み中の表示も持つ
 type DropzoneProps = {
@@ -44,7 +49,7 @@ export function Dropzone({
         {state === 'idle' && 'CSVファイルをドロップ、またはクリックして選択'}
       </span>
       <span className="c-dropzone__hint" role={error ? 'alert' : undefined}>
-        {state === 'error' ? error : 'ファイルはこのブラウザ内だけで処理されます'}
+        {state === 'error' ? error : HINT}
       </span>
       <input
         id={inputId}

@@ -52,6 +52,20 @@
     list-style: none;
   }
 
+  &__logout {
+    padding: var(--space-8) var(--space-12);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text-2);
+    cursor: pointer;
+    @include text-style('label-medium');
+
+    &:hover {
+      background: var(--color-neutral-soft);
+    }
+  }
+
   &__note {
     margin-top: auto;
     padding: var(--space-12);

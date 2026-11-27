@@ -7,7 +7,8 @@ import type { DateRange, Order } from '../types/domain'
 // =====================================================================
 // アプリ全体で共有するデータ（Context）
 // 取り込み画面で読み込んだ注文を、ダッシュボードや一覧画面でも使えるようにする。
-// データはメモリ上だけに置き、ページを再読み込みすると消える（保存しない）。
+// 公開デモ：データはメモリ上だけに置き、ページを再読み込みすると消える（保存しない）。
+// GAS 版：集計に必要な項目だけをスプレッドシートに保存し、次回はそこから読み込む。
 // =====================================================================
 
 export type ShopifyImport = {
@@ -25,13 +26,29 @@ export type GoAffProData = {
   leaderboard: { range: DateRange; rows: LeaderboardRow[]; importedAt: Date } | null
 }
 
+/** スプレッドシートに保存済みのデータの概要（GAS 版のみ） */
+export type StoredInfo = {
+  orderCount: number
+  lastImport: { fileName: string; importedAt: Date; orderCount: number } | null
+}
+
+/** スプレッドシートへの保存の状態（GAS 版のみ） */
+export type SaveState = {
+  status: 'idle' | 'saving' | 'saved' | 'error'
+  message: string | null
+}
+
 export type DataContextValue = {
-  /** 'demo'：架空のサンプル ／ 'shopify'：取り込んだ CSV */
+  /** 'demo'：架空のサンプル ／ 'shopify'：取り込んだ CSV（または保存済みのデータ） */
   source: 'demo' | 'shopify'
   orders: Order[]
   /** 注文データがカバーしている期間（照合で「まるごと含む月」を判定するのに使う） */
   coverage: DateRange | null
   shopifyImport: ShopifyImport | null
+  /** 保存済みデータ（GAS 版でデータがあるとき）。公開デモでは常に null */
+  stored: StoredInfo | null
+  /** 保存の状態。公開デモ（保存しない）では null */
+  storage: SaveState | null
   goaffpro: GoAffProData
   setShopifyData: (orders: Order[], info: ShopifyImport) => void
   setGoAffProMonthly: (year: number, rows: MonthlyRow[]) => void

@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router'
-import { APP_NAME } from '../../config/app'
+import { APP_NAME, IS_GAS } from '../../config/app'
+import { useSession } from '../../store/sessionContext'
 
 // メニュー項目の定義。項目を増やすときはここに1行足す
 const NAV_ITEMS = [
@@ -49,6 +50,7 @@ function NavIcon({ name }: { name: IconName }) {
 }
 
 export function Sidebar() {
+  const session = useSession()
   return (
     <nav className="l-sidebar" aria-label="メインメニュー">
       <div className="l-sidebar__logo">
@@ -74,8 +76,16 @@ export function Sidebar() {
       </ul>
 
       <p className="l-sidebar__note">
-        データはこのブラウザ内だけで処理されます。ページを再読み込みすると消去されます。
+        {IS_GAS
+          ? '集計に必要な項目だけをスプレッドシートに保存しています。氏名・住所・メールは保存しません。'
+          : 'データはこのブラウザ内だけで処理されます。ページを再読み込みすると消去されます。'}
       </p>
+
+      {session && (
+        <button type="button" className="l-sidebar__logout" onClick={session.logout}>
+          ログアウト
+        </button>
+      )}
     </nav>
   )
 }

@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "lint": "oxlint",
     "test": "vitest",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "build:gas": "tsc -b && vite build --mode gas && cp dist-gas/index.html gas/index.html",
+    "push:gas": "npm run build:gas && cd gas && npx @google/clasp push --force"
   },
   "dependencies": {
     "papaparse": "^5.7.0",
@@ -29,6 +31,7 @@
     "sass": "^1.105.2",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
+    "vite-plugin-singlefile": "^2.3.4",
     "vitest": "^5.0.5"
   }
 }

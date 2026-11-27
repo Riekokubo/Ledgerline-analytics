@@ -1,0 +1,82 @@
+// p-login：GAS 版のログイン画面
+@use '../../foundation/tokens' as *;
+
+.p-login {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: var(--space-24);
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+    width: 100%;
+    max-width: 380px;
+    padding: var(--space-32);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  // ロゴはサイドバーと同じ見た目
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--color-text);
+    color: var(--color-surface);
+    @include text-style('body-strong');
+  }
+
+  &__wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+
+    strong {
+      @include text-style('body-strong');
+    }
+
+    small {
+      color: var(--color-text-3);
+      @include text-style('caption-regular');
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+
+    .c-button {
+      width: 100%;
+    }
+  }
+
+  &__title {
+    @include text-style('heading-page');
+  }
+
+  &__description,
+  &__loading {
+    margin-top: var(--space-4);
+    color: var(--color-text-2);
+    @include text-style('body-regular');
+  }
+
+  &__note {
+    padding-top: var(--space-16);
+    border-top: 1px solid var(--color-border-subtle);
+    color: var(--color-text-3);
+    @include text-style('caption-regular');
+  }
+}
