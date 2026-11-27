@@ -42,7 +42,8 @@ function toLines(text: string): { line: number; cells: string[] }[] {
 /** '¥1,704,000' '20.28%' '1,231' などを数値にする */
 export function parseNumber(value: string | undefined): number | null {
   if (value === undefined) return null
-  const cleaned = value.replace(/[¥$,%\s]/g, '')
+  // 全角の「￥」「１２３」「，」なども半角にそろえてから読む（NFKC：文字の形をそろえる）
+  const cleaned = value.normalize('NFKC').replace(/[¥$,%\s]/g, '')
   if (cleaned === '' || !/^-?\d+(\.\d+)?$/.test(cleaned)) return null
   return Number(cleaned)
 }
@@ -64,7 +65,7 @@ const MONTHS_EN = [
 
 /** 'September' 'Sep' '9月' '9' → 9（読めなければ null） */
 export function parseMonth(value: string): number | null {
-  const v = value.trim().toLowerCase()
+  const v = value.normalize('NFKC').trim().toLowerCase()
   const english = MONTHS_EN.findIndex((m) => m === v || m.slice(0, 3) === v)
   if (english !== -1) return english + 1
   const numeric = v.match(/^(\d{1,2})月?$/)
