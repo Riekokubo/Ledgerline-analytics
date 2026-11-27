@@ -24,12 +24,21 @@ export class GasError extends Error {
   }
 }
 
-/** 'Error: [auth] 〜' のような文字から、種類と本文を取り出す */
+/** GAS から返ったエラーを文字にする（Error 以外の形で届くこともある） */
+function errorText(raw: unknown): string {
+  if (typeof raw === 'string') return raw
+  if (raw && typeof raw === 'object' && 'message' in raw) return String(raw.message)
+  return String(raw ?? '')
+}
+
+/**
+ * 'Error: [auth] 〜' 'ScriptError: Exception: [pin] 〜' のような文字から、種類と本文を取り出す。
+ * 先頭に付く文字は環境によって違うので、[auth] などの印を文中から探す
+ */
 export function parseGasError(raw: unknown): GasError {
-  const text = raw instanceof Error ? raw.message : String(raw ?? '')
-  const cleaned = text.replace(/^(Error|Exception):\s*/, '')
-  const match = cleaned.match(/^\[(auth|pin|locked|setup|busy|data)\]\s*(.*)$/s)
-  if (match) return new GasError(match[1] as GasErrorKind, match[2])
+  const match = errorText(raw).match(/\[(auth|pin|locked|setup|busy|data)\]\s*([\s\S]*)$/)
+  if (match) return new GasError(match[1] as GasErrorKind, match[2].trim())
+  console.error('Ledgerline: GAS error', raw) // 想定外のエラーは原因を調べられるよう残す
   return new GasError('unknown', '通信に失敗しました。時間をおいてもう一度お試しください。')
 }
 
