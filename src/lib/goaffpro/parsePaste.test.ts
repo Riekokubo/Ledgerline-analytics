@@ -81,3 +81,27 @@ describe('部品', () => {
     expect(parseNumber('—')).toBeNull()
   })
 })
+
+describe('全角の記号・数字', () => {
+  it('全角の「￥」で書かれた金額も読める（GoAffPro の画面からコピーした場合）', () => {
+    expect(parseNumber('￥1,316,800')).toBe(1316800)
+    expect(parseNumber('￥96,000')).toBe(96000)
+    expect(parseNumber('１，２３１')).toBe(1231)
+  })
+
+  it('見出しなし・全角の「￥」・余分な列があっても、月別データを読める', () => {
+    const text = [
+      'February\t12\t￥96,000\t￥21,900\t22.81%\t0\t0',
+      'July\t166\t￥1,316,800\t￥276,100\t20.97%\t1\t0',
+      'August\t1,231\t￥8,741,600\t￥1,767,520\t20.22%\t0\t0',
+    ].join('\n')
+    const result = parseAnnualReport(text, 2026)
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.rows).toEqual([
+      { month: '2026-02', sales: 12, revenue: 96000, commission: 21900 },
+      { month: '2026-07', sales: 166, revenue: 1316800, commission: 276100 },
+      { month: '2026-08', sales: 1231, revenue: 8741600, commission: 1767520 },
+    ])
+  })
+})
